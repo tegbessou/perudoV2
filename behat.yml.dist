@@ -10,7 +10,7 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/bootstrap.php
         Behat\MinkExtension:
-            base_url: https://skeleton.docker/
+            base_url: https://perudo.docker/
             default_session: default
             sessions:
                 default:

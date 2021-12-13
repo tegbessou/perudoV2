@@ -1,7 +1,7 @@
 PROMPT_COMMAND=prompter
 
 function prompter() {
-    export PS1="\[\e[32m\]Skeleton\[\e[m\] 🔥 \u$(_env)>"
+    export PS1="\[\e[32m\]Perudo\[\e[m\] 🔥 \u$(_env)>"
 }
 
 function _env() {

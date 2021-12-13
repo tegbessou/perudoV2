@@ -1,163 +1,35 @@
-# Skeleton
-![CI](https://github.com/tegbessou/skeleton/workflows/CI/badge.svg)
-## Description
-A skeleton of application, which can be used if you have to start a new project with Symfony, Ningx, PHP and Mysql.
+# Perudo v2
+## Rules
+Nombre de joueurs: 1 à 6 joueur
 
-## Purpose
-This skeleton will be used on new and actual projects in our organization
-In our skeleton we want a stack which is capable to run a Symfony application
+5 dès chacun au début de la partie
 
-## What is in Skeleton ?
-### Docker
-- Nginx: 1.19
-- PHP: 8.0
-- Mariadb: 10.7
-- Redis: 6.2
-- Mailcatcher
-- PhpMyAdmin
+Les dès sont des dès à 6 face, avec les valeurs 2, 3, 4, 5 et 6. Le 1 est remplacé par un jocker avec le symbole: 🦜 qui prend n'importe quelle autre valeur
 
-### Symfony
-Version 5.3
+Le but est d'être le dernier joueur à qui, il reste au moins un dès
 
-### Functionnal Test
-We use Behat. To run behat use:
-<pre>
-  make behat
-</pre>
+C'est un jeu de pari, où l'on pari sur le nombre de dès d'une certaine valeur qu'il y a parmi les dès de tous les joueurs. Les dès adverses son cachés
 
-### Unit Test
-We use PHPUnit. To run unit test use:
-<pre>
-  make unit-test
-</pre>
+Lors de son tour, le joueur peut soit faire un pari, soit dire menteur pour le pari du joueur précédent
 
-### Makefile
-To see all usefull command run:
-<pre>
-  make help
-</pre>
+Pour faire un pari, il faut que le nombre de dès du pari où la valeur des dès soient augmenter. Où changer les paris et parier sur les jokers. Pour changer le pari en joker, il faut diviser le nombre de dès du paris précédent par 2 et arrondir à l'entier supérieur. Pour changer un pari de joker, vers les autres valeurs il faut multiplier le nombre de dès du pari précédent par 2 et ajouter un au résultat
 
-## How to start with Skeleton ?
-### First replace "skeleton" occurence with your project name
-- Change all occurences of "skeleton" in Makefile
-- Change host "skeleton.docker" in site.conf
-- Change "skeleton" in .bashrc
-- Change base url "https://skeleton.docker" in behat.yml.dist
-- Change database name "skeleton" in .env
-- Change dump name "skeleton.sql" in FixtureContext
-- Change local domain "https://skeleton.docker" in ErrorHandlerContext.php
-- Change urls which finish with "skeleton.docker" in docker-compose.override.yaml.dist
-- Change urls which finish with "skeleton.docker" in docker-compose.yaml
-- Rename "dump/skeleton.sql" by "dump/your-project.sql"
+Example: Le premier joueur fait un pari de 3 dès de 4, le joueur suivant peut soit
 
-### Add host in your /etc/hosts
-<pre>
-  sudo vim /etc/hosts
-</pre>
+- Augmenter le nombre de dès et garder la valeur: 4 dès de 4
+- Augmenter le nombre de dès et diminuer la valeur: 4 dès de 3
+- Augmenter la valeur: 3 dès de 5
+- Augmenter la valeur et le nombre de dès: 4 dès de 6
+- Changer la pari vers des jokers, pour ça il faut diviser par 2 le pari précédent et on arrondi à l'entier supérieur (3/2 ≈ 2): 2 joker
 
-<pre>
-  127.0.0.1 your-host.docker
-  127.0.0.1 pma.your-host.docker
-  127.0.0.1 mailcatcher.your-host.docker
-</pre>
+Example: Changer le pari de joker vers nombre pour un pari précédent de 3 joker
 
-### Install the project
-<pre>
-  make install
-</pre>
+- Il faut multiplier le précédent pari par 2 et ajouter un: (2*3+1 = 7): 7 dès de 6
 
-### Work with project
-If you have already install the project and you want to switch to another project or stop for today,
-just stop your project:
-<pre>
-  make stop
-</pre>
-And start when you need with:
-<pre>
-  make start
-</pre>
-## Database management
-We used a dump to reload faster our database. To load your database use:
-<pre>
-  make db-load-fixtures
-</pre>
-### Update dump
-If you add some migration or some fixtures, you have to update your dump with:
-<pre>
-   make db-reload-fixtures
-</pre>
-### PhpMyAdmin
-To access PhpMyAdmin use: https://pma.your-host.docker
+Si le joueur dit menteur au joueur précédent, on révèle les dès de tous les joueurs et l'on compte les dès. Si le compte est égale où supérieur au pari remis en cause alors le joueur qui a dit menteur perd un dès et ne joue donc plus qu'avec 4 dès. Sinon c'est le joueur qui a menti qui perd un dès. Le joueur qui perd un dès est le joueur qui commencera lors du prochain tour
 
-- Login: root
-- Password: root
+Le tout pile est un annonce que l'on peut faire même si ce n'est pas à notre tour de jouer. Tout pile veut dire qu'il y à exactement le compte de dès du pari en cours. Lors d'un tout pile on révèle les dès de tous les joueurs et l'on compte les dès. Si le compte est exactement égal au nombre de dès alors le joueur qui a dit tout pile, gagne un dès et c'est le joueur dont le pari était tout pile qui commence le prochain tour. Cependant s'il est différent alors ce joueur perd un dès et ce sera à lui de commencer le prochain tour
 
-## Quality of our code
-We have some quality tools and to run all this tools, you can use:
-<pre>
-  make code-quality
-</pre>
-In our quality tools you can find:
-### Security checker of symfony
-This tools check, if you have vulnerability in your dependencies
-<pre>
-  make security-checker
-</pre>
-### PHPmd
-<pre>
-  make phpmd
-</pre>
-### Composer unused
-This tools allows you to check if you have unused dependencies
-<pre>
-  make composer-unused
-</pre>
-### Yaml Linter
-<pre>
-  make yaml-linter
-</pre>
-### Xliff Linter
-<pre>
-  make xliff-linter
-</pre>
-### Twig Linter
-<pre>
-  make twig-linter
-</pre>
-### Container Linter
-<pre>
-  make container-linter
-</pre>
-### PHPStan
-<pre>
-  make phpstan
-</pre>
-### CS Fixer
-This tools check if you have error in your coding styles.
+Quand un joueur arrive à un dès, les jokers ne comptent plus pour les autres valeurs mais juste en tant que joker. Le système de pari sur les joker devient le même que pour les autres valeurs. Cette règle ne dure que le tour où le joueur arrive à un dès, ensuite le fonctionnement revient à la normal
 
-To show this error use:
-<pre>
-  make cs
-</pre>
-
-To fix this errors use:
-<pre>
-  make cs-fix
-</pre>
-### Validate database schema
-This Symfony command check if your database schema is coherent with your entities annotation
-<pre>
-  make db-validate
-</pre>
-
-## Mailcatcher
-If your local app send mail, your mail will be catched by the mailcatcher.
-To see this mail go to: https://mailcatcher.your-host.docker
-
-## Next step
-If you want to help use, you can add some features like:
-- A gitlab-ci.yaml example
-- Add a docker image for S3 storage and some test
-- Add Mac support
-
-This are idea, but feel free to suggest any features you want!!
+Quand un joueur n'a plus de dès, il est éliminé de la partie

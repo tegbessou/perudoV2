@@ -8,7 +8,7 @@ COMPOSER = $(EXEC_PHP) composer
 .DEFAULT_GOAL := help
 
 help: ## This help dialog.
-	@echo "${GREEN}Skeleton${RESET}"
+	@echo "${GREEN}Perudo${RESET}"
 	@awk '/^[a-zA-Z\-\_0-9]+:/ { \
 		helpMessage = match(lastLine, /^## (.*)/); \
 		if (helpMessage) { \
@@ -109,7 +109,7 @@ Database:
 ## Load database from dump
 db-load-fixtures: wait-db
 	@echo "\nLoading fixtures from dump...\e[0m"
-	@$(EXEC_DB) "mysql --user=root --password=root < /home/app/dump/skeleton.sql"
+	@$(EXEC_DB) "mysql --user=root --password=root < /home/app/dump/perudo.sql"
 
 ## Recreate database structure
 db-reload-schema: wait-db db-drop db-create db-migrate
@@ -131,7 +131,7 @@ db-diff: wait-db
 ## Load migration
 db-migrate: wait-db
 	@echo "\nRunning migrations...\e[0m"
-	@$(EXEC_SYMFONY) doctrine:migration:migrate --no-interaction --all-or-nothing
+	@$(EXEC_SYMFONY) doctrine:migration:migrate --no-interaction --all-or-nothing --allow-no-migration
 
 ## Reload fixtures
 db-reload-fixtures: wait-db db-reload-schema
@@ -139,7 +139,7 @@ db-reload-fixtures: wait-db db-reload-schema
 	@$(EXEC_SYMFONY) hautelook:fixtures:load --no-interaction
 
 	@echo "\nCreating dump...\e[0m"
-	@$(EXEC_DB) "mysqldump --user=root --password=root --databases skeleton > /home/app/dump/skeleton.sql"
+	@$(EXEC_DB) "mysqldump --user=root --password=root --databases perudo > /home/app/dump/skeleton.sql"
 
 #################################
 Test:

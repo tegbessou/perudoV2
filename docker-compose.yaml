@@ -68,7 +68,7 @@ services:
     networks:
       - web
     external_links:
-      - nginx-proxy:skeleton.docker
+      - nginx-proxy:perudo.docker
 
 networks:
     web:

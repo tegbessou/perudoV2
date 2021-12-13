@@ -9,7 +9,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 final class FixtureContext implements Context, TagInterface
 {
-    private const DUMP = 'dump/skeleton.sql';
+    private const DUMP = 'dump/perudo.sql';
 
     /**
      * @BeforeScenario
